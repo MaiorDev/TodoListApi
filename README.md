@@ -1,6 +1,6 @@
 # 📝 TaskFlow API - Spring Boot Task Manager
 
-https://github.com/MaiorDev/TodoListApi
+https://roadmap.sh/projects/todo-list-api
 
 A professional RESTful API built with Spring Boot to manage personal tasks. This project implements secure authentication using **JWT (JSON Web Tokens)** and follows a clean architecture with a modular security structure.
 
