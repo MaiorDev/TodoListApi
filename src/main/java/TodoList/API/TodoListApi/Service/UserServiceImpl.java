@@ -5,9 +5,8 @@ import TodoList.API.TodoListApi.Entity.UserEntity;
 import TodoList.API.TodoListApi.Model.LoginBean;
 import TodoList.API.TodoListApi.Model.UserBean;
 import TodoList.API.TodoListApi.Repository.UserRepository;
-import TodoList.API.TodoListApi.Security.JwtUtils;
+import TodoList.API.TodoListApi.Security.util.JwtUtils;
 import TodoList.API.TodoListApi.Utils.GenericResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,4 +59,6 @@ public class UserServiceImpl implements UserService {
         }
         return new GenericResponse(1, "Invalid credentials", null);
     }
+
+
 }

@@ -1,4 +1,4 @@
-package TodoList.API.TodoListApi.Security;
+package TodoList.API.TodoListApi.Security.util;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

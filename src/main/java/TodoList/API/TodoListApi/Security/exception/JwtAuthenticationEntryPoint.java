@@ -1,4 +1,4 @@
-package TodoList.API.TodoListApi.Security;
+package TodoList.API.TodoListApi.Security.exception;
 
 import TodoList.API.TodoListApi.Utils.GenericResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,12 +16,10 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
-        
-        // Configuramos la respuesta manual porque aquí aún no llega al Controller
-        response.setContentType("application/json");
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
 
-        // Usamos tu código de estado 1 para errores de validación/credenciales
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
         GenericResponse errorResponse = new GenericResponse(1, "Invalid credentials or token missing", null);
 
         ObjectMapper mapper = new ObjectMapper();

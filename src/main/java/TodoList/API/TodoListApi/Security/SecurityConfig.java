@@ -1,5 +1,8 @@
 package TodoList.API.TodoListApi.Security;
 
+import TodoList.API.TodoListApi.Security.exception.JwtAuthenticationEntryPoint;
+import TodoList.API.TodoListApi.Security.filter.JwtFilter;
+import TodoList.API.TodoListApi.Security.util.JwtUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,13 +33,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint)) // <--- AGREGAMOS ESTO
+                // Esto permite que los frames de H2 carguen correctamente
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/h2-console/**").permitAll()
                         .anyRequest().authenticated()
                 )
-        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 

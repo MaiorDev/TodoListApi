@@ -3,6 +3,7 @@ package TodoList.API.TodoListApi.Controller;
 import TodoList.API.TodoListApi.Model.TodoBean;
 import TodoList.API.TodoListApi.Service.TodoService;
 import TodoList.API.TodoListApi.Utils.GenericResponse;
+import jakarta.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,14 +17,27 @@ public class TodoController {
         this.todoService = todoService;
     }
 
-    @PostMapping(value = "/create")
-    public GenericResponse createTodo(@RequestBody TodoBean todoBean) {
-        try {
-            String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+    @GetMapping("/list")
+    public GenericResponse listMyTodos() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return todoService.getMyTodos(email);
+    }
 
+    @PostMapping(value = "/create")
+    public GenericResponse createTodo(@Valid @RequestBody TodoBean todoBean) {
+            String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
             return todoService.createTodo(todoBean, userEmail);
-        }catch (Exception e){
-            return new GenericResponse(2, "Error interno al crear la tarea: " + e.getMessage(), null);
-        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public GenericResponse delete(@PathVariable Long id) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return todoService.deleteTodo(id, email);
+    }
+
+    @PutMapping("/update/{id}")
+    public GenericResponse update(@PathVariable Long id,@Valid  @RequestBody TodoBean todoBean) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return todoService.updateTodo(id, todoBean, email);
     }
 }
